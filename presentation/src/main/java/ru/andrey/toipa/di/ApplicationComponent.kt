@@ -3,11 +3,14 @@ package ru.andrey.toipa.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Singleton
-@Component
+@Component(modules = [ApplicationDataModule::class])
 interface ApplicationComponent {
+
+    fun okHttpClient(): OkHttpClient
 
     @Component.Builder
     interface Builder {
