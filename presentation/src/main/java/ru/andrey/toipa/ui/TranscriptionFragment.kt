@@ -29,7 +29,22 @@ class TranscriptionFragment : Fragment() {
         super.onStart()
         wordInput.addTextChangedListener(textChanged { viewModel.setWord(it) } debounce 300)
         viewModel.observeTranscriptions().observe(this, Observer {
-            ipaText.text = it.toString()
+            handleState(it!!)
         })
+    }
+
+    private fun handleState(state: TranscriptionsState) {
+        if (state.result == null) {
+            ipaText.text = ""
+        } else {
+            ipaText.text = state.result.transcriptions.toString()
+        }
+
+        progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
+
+        if (state.error) {
+            // todo: error handling
+            ipaText.text = "error"
+        }
     }
 }

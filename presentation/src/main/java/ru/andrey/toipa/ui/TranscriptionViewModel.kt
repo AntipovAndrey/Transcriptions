@@ -12,22 +12,35 @@ import javax.inject.Inject
 
 class TranscriptionViewModel @Inject constructor(private val interactor: TranscriptionInteractor) : ViewModel() {
 
-    private val transcriptions: MutableLiveData<List<String>> = MutableLiveData()
+    private val transcriptions: MutableLiveData<TranscriptionsState> = MutableLiveData()
 
-    private var job: Job? = null
+    private var fetchIpaJob: Job? = null
 
-    fun observeTranscriptions(): LiveData<List<String>> = transcriptions
+    init {
+        transcriptions.value = Initial
+    }
+
+    fun observeTranscriptions(): LiveData<TranscriptionsState> = transcriptions
 
     fun setWord(word: String) {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            job?.cancel()
-            val result = interactor.transcriptionFor(word).transcriptions
-            transcriptions.postValue(result)
+        fetchIpaJob?.cancel()
+        if (word.isEmpty()) {
+            transcriptions.postValue(Initial)
+            return
+        }
+        fetchIpaJob = CoroutineScope(Dispatchers.IO).launch {
+            transcriptions.postValue(Loading)
+            try {
+                val loaded = Success(interactor.transcriptionFor(word))
+                transcriptions.postValue(loaded)
+            } catch (e: Exception) {
+                transcriptions.postValue(Error)
+            }
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        job?.cancel()
+        fetchIpaJob?.cancel()
     }
 }
