@@ -1,0 +1,37 @@
+ext {
+    // Android
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+
+    // Libs
+    androidSupportLibVersion = "28.0.0"
+
+    roomVersion = "1.1.1"
+    room = "android.arch.persistence.room:runtime:$roomVersion"
+    roomCompiler = "android.arch.persistence.room:compiler:$roomVersion"
+
+    daggerVersion = "2.13"
+    dagger = "com.google.dagger:dagger:$daggerVersion"
+    daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    retrofitVersion = "2.3.0"
+    retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    // Testing
+    junit = "junit:junit:4.12"
+    mockito = "org.mockito:mockito-core:2.8.47"
+    androidTestRunner = "com.android.support.test:runner:1.0.1"
+
+    junit5Version = "5.3.1"
+    junit5api = "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+    junit5engine = "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+
+    espressoVersion = "3.1.0"
+    espressoCore = "androidx.test.espresso:espresso-core:$espressoVersion"
+    espressoIntents = "androidx.test.espresso:espresso-intents:$espressoVersion"
+    testRules = "androidx.test:rules:1.1.0"
+    testRunner = "androidx.test.ext:junit:1.1.0"
+}

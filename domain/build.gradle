@@ -1,8 +1,8 @@
-apply plugin: 'java-library'
+apply plugin: 'kotlin'
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }
-
-sourceCompatibility = "7"
-targetCompatibility = "7"
