@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.ipa_fragment.*
 import ru.andrey.toipa.R
 import ru.andrey.toipa.utils.app
+import ru.andrey.toipa.utils.debounce
 import ru.andrey.toipa.utils.textChanged
 
 class TranscriptionFragment : Fragment() {
@@ -26,7 +27,7 @@ class TranscriptionFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        wordInput.addTextChangedListener(textChanged { viewModel.setWord(it) })
+        wordInput.addTextChangedListener(textChanged { viewModel.setWord(it) } debounce 300)
         viewModel.observeTranscriptions().observe(this, Observer {
             ipaText.text = it.toString()
         })
