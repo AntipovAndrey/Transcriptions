@@ -2,11 +2,13 @@ package ru.andrey.toipa.ui
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.ipa_fragment.*
+import ru.andrey.domain.model.Variant
 import ru.andrey.toipa.R
 import ru.andrey.toipa.utils.app
 import ru.andrey.toipa.utils.debounce
@@ -35,9 +37,11 @@ class TranscriptionFragment : Fragment() {
 
     private fun handleState(state: TranscriptionsState) {
         if (state.result == null) {
-            ipaText.text = ""
+            showIpa(false)
         } else {
-            ipaText.text = state.result.transcriptions.toString()
+            ipaAmerican.text = state.result.transcriptions[Variant.AMERICAN].toString()
+            ipaBritish.text = state.result.transcriptions[Variant.BRITISH].toString()
+            showIpa(true)
         }
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
@@ -46,5 +50,11 @@ class TranscriptionFragment : Fragment() {
             // todo: error handling
             ipaText.text = "error"
         }
+    }
+
+    private fun showIpa(show: Boolean) {
+        val visibility = if (show) View.VISIBLE else View.INVISIBLE
+        ipaAmerican.visibility = visibility
+        ipaBritish.visibility = visibility
     }
 }
