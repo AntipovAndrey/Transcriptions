@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.andrey.domain.interactor.TranscriptionInteractor
+import ru.andrey.toipa.utils.ifActive
 import javax.inject.Inject
 
 class TranscriptionViewModel @Inject constructor(private val interactor: TranscriptionInteractor) : ViewModel() {
@@ -32,9 +33,9 @@ class TranscriptionViewModel @Inject constructor(private val interactor: Transcr
             transcriptions.postValue(Loading)
             try {
                 val loaded = Success(interactor.transcriptionFor(word))
-                transcriptions.postValue(loaded)
+                ifActive { transcriptions.postValue(loaded) }
             } catch (e: Exception) {
-                transcriptions.postValue(Error())
+                ifActive { transcriptions.postValue(Error()) }
             }
         }
     }
