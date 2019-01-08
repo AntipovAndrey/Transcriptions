@@ -28,6 +28,7 @@ dependencies {
     implementation coroutines
 
     implementation "com.android.support:appcompat-v7:$androidSupportLibVersion"
+    implementation "com.android.support:design:$androidSupportLibVersion"
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
@@ -36,8 +37,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Dependency Injection
-    kapt rootProject.ext.daggerCompiler
-    implementation rootProject.ext.dagger
+    kapt daggerCompiler
+    implementation dagger
 
     // Retrofit
     implementation retrofit

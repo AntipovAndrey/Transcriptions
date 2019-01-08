@@ -46,9 +46,8 @@ class TranscriptionFragment : Fragment() {
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
 
-        if (state.error) {
-            // todo: error handling
-            ipaText.text = "error"
+        if (state.error.contentIfNotHandled == true) {
+            Snackbar.make(rootView, "Error", Snackbar.LENGTH_LONG).show();
         }
     }
 

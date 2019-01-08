@@ -34,7 +34,7 @@ class TranscriptionViewModel @Inject constructor(private val interactor: Transcr
                 val loaded = Success(interactor.transcriptionFor(word))
                 transcriptions.postValue(loaded)
             } catch (e: Exception) {
-                transcriptions.postValue(Error)
+                transcriptions.postValue(Error())
             }
         }
     }
