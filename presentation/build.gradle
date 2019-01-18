@@ -29,6 +29,7 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:$androidSupportLibVersion"
     implementation "com.android.support:design:$androidSupportLibVersion"
+    implementation "com.android.support:support-emoji-bundled:$androidSupportLibVersion"
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 

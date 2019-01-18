@@ -53,7 +53,7 @@ class TranscriptionFragment : Fragment() {
 
     private fun showIpa(show: Boolean) {
         val visibility = if (show) View.VISIBLE else View.INVISIBLE
-        ipaAmerican.visibility = visibility
-        ipaBritish.visibility = visibility
+        americanCard.visibility = visibility
+        britishCard.visibility = visibility
     }
 }

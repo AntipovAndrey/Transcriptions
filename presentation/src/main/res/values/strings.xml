@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">To IPA</string>
+
+    <string name="usa_flag_emoji" translatable="false">&#127482;&#127480;</string>
+    <string name="british_flag_emoji" translatable="false">&#127468;&#127463;</string>
 </resources>

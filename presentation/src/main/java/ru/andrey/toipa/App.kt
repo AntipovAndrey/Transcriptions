@@ -1,6 +1,8 @@
 package ru.andrey.toipa
 
 import android.app.Application
+import android.support.text.emoji.EmojiCompat
+import android.support.text.emoji.bundled.BundledEmojiCompatConfig
 import ru.andrey.toipa.di.ApplicationComponent
 import ru.andrey.toipa.di.DaggerApplicationComponent
 import ru.andrey.toipa.di.transcription.DaggerTranscriptionComponent
@@ -18,5 +20,11 @@ class App : Application() {
         DaggerTranscriptionComponent.builder()
             .applicationComponent(appComponent)
             .build()
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        super.onCreate()
+        EmojiCompat.init(BundledEmojiCompatConfig(this))
     }
 }
