@@ -9,6 +9,10 @@ import java.net.URLEncoder.encode
 
 class CollinsHtmlDictionaryService(private val okHttpClient: OkHttpClient) : DictionaryService {
 
+    // some of the transcriptions are marked with a hint
+    private val ipaHints = listOf("unstressed", "weak", "STRONG").joinToString("|")
+    private val hintsRegex = Regex("\\s*\\b($ipaHints)\\b\\s*")
+
     override fun getTranscriptions(word: String): Map<Variant, List<String>> {
         val request = Request.Builder()
             .url(url(word)).build()
@@ -32,10 +36,15 @@ class CollinsHtmlDictionaryService(private val okHttpClient: OkHttpClient) : Dic
             .map { it.text() }
             .map { it.split(";") }
             .flatMap { it.asSequence() }
+            .map(removeHints())
             .map { it.trim() }
             .distinct()
             .filter { it.isNotEmpty() }
             .toList()
+    }
+
+    private fun removeHints(): (String) -> String = {
+        it.replace(hintsRegex, "")
     }
 
     private fun variant(dictentry: Element): Variant {
