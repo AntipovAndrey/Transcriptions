@@ -37,11 +37,11 @@ class TranscriptionFragment : Fragment() {
 
     private fun handleState(state: TranscriptionsState) {
         if (state.result == null) {
-            showIpa(false)
+            hideAll()
         } else {
-            ipaAmerican.text = state.result.transcriptions[Variant.AMERICAN].toString()
-            ipaBritish.text = state.result.transcriptions[Variant.BRITISH].toString()
-            showIpa(true)
+            val transcriptions = state.result.transcriptions
+            showAmerican(transcriptions[Variant.AMERICAN])
+            showBritish(transcriptions[Variant.BRITISH])
         }
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
@@ -51,9 +51,30 @@ class TranscriptionFragment : Fragment() {
         }
     }
 
-    private fun showIpa(show: Boolean) {
-        val visibility = if (show) View.VISIBLE else View.INVISIBLE
-        americanCard.visibility = visibility
-        britishCard.visibility = visibility
+    private fun getTranscriptionText(transcriptions: List<String>) = transcriptions.joinToString("\n")
+
+    private fun showAmerican(transcriptions: List<String>?) {
+        showIpa(transcriptions, Variant.AMERICAN)
+    }
+
+    private fun showBritish(transcriptions: List<String>?) {
+        showIpa(transcriptions, Variant.BRITISH)
+    }
+
+    private fun showIpa(transcriptions: List<String>?, variant: Variant) {
+        val card = if (variant == Variant.AMERICAN) americanCard else britishCard
+        val text = if (variant == Variant.AMERICAN) ipaAmerican else ipaBritish
+
+        if (transcriptions.isNullOrEmpty()) {
+            card.visibility = View.GONE
+        } else {
+            card.visibility = View.VISIBLE
+            text.text = getTranscriptionText(transcriptions)
+        }
+    }
+
+    private fun hideAll() {
+        americanCard.visibility = View.GONE
+        britishCard.visibility = View.GONE
     }
 }
