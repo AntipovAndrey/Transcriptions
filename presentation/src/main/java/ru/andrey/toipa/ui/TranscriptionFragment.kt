@@ -2,8 +2,10 @@ package ru.andrey.toipa.ui
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,12 +67,35 @@ class TranscriptionFragment : Fragment() {
         val card = if (variant == Variant.AMERICAN) americanCard else britishCard
         val text = if (variant == Variant.AMERICAN) ipaAmerican else ipaBritish
 
-        if (transcriptions.isNullOrEmpty()) {
+        val hideCard = transcriptions.isNullOrEmpty()
+
+        if (variant == Variant.BRITISH) {
+            if (hideCard) {
+                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
+                    rightMargin = toPx(8)
+                }
+            } else {
+                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
+                    rightMargin = toPx(0)
+                }
+            }
+        }
+
+        if (hideCard) {
+            if (variant == Variant.BRITISH) { // left card gone
+                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
+                    rightMargin = toPx(8)
+                }
+            }
             card.visibility = View.GONE
         } else {
             card.visibility = View.VISIBLE
-            text.text = getTranscriptionText(transcriptions)
+            text.text = getTranscriptionText(transcriptions!!)
         }
+    }
+
+    private fun toPx(dp: Int): Int {
+        return Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
 
     private fun hideAll() {
