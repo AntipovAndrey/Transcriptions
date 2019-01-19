@@ -13,8 +13,7 @@ class TranscriptionDataModule {
     @Feature
     @Provides
     fun provideRoomDatabase(context: Context): TranscriptionDatabase {
-        return Room.databaseBuilder(context, TranscriptionDatabase::class.java, "transcription")
-            //.addMigrations(TranscriptionDatabase.MIGRATION_1_2)
+        return Room.databaseBuilder(context, TranscriptionDatabase::class.java, "transcription.db")
             .build()
     }
 }

@@ -15,6 +15,8 @@ interface ApplicationComponent {
 
     fun databaseCopier(): DatabaseCopier
 
+    fun context(): Context
+
     @Component.Builder
     interface Builder {
 
