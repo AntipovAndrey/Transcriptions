@@ -1,9 +1,10 @@
 package ru.andrey.toipa.di
 
-import android.app.Application
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import okhttp3.OkHttpClient
+import ru.andrey.data.db.copier.DatabaseCopier
 import javax.inject.Singleton
 
 @Singleton
@@ -12,11 +13,13 @@ interface ApplicationComponent {
 
     fun okHttpClient(): OkHttpClient
 
+    fun databaseCopier(): DatabaseCopier
+
     @Component.Builder
     interface Builder {
 
         @BindsInstance
-        fun application(application: Application): Builder
+        fun context(context: Context): Builder
 
         fun build(): ApplicationComponent
     }

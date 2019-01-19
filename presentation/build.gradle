@@ -44,6 +44,9 @@ dependencies {
     // Retrofit
     implementation retrofit
 
+    // Room
+    implementation room
+
     implementation project(':data')
     implementation project(':domain')
 }

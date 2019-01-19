@@ -12,7 +12,7 @@ class App : Application() {
 
     val appComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
-            .application(this)
+            .context(this)
             .build()
     }
 
@@ -26,5 +26,6 @@ class App : Application() {
         super.onCreate()
         super.onCreate()
         EmojiCompat.init(BundledEmojiCompatConfig(this))
+        appComponent.databaseCopier().copy()
     }
 }
