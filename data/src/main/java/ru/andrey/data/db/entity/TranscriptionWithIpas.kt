@@ -3,14 +3,15 @@ package ru.andrey.data.db.entity
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
 
-data class TranscriptionsWithIpa(
+class TranscriptionWithIpas {
 
     @Embedded
-    var transcriptionData: TranscriptionData,
+    lateinit var transcriptionData: TranscriptionData
+
     @Relation(
         parentColumn = "id",
         entity = IpaData::class,
         entityColumn = "transcriptionId"
     )
-    var ipas: List<IpaData>
-)
+    lateinit var ipas: List<IpaData>
+}
