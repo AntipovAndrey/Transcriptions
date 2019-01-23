@@ -12,6 +12,8 @@ interface ApplicationComponent {
 
     fun okHttpClient(): OkHttpClient
 
+    fun application(): Application
+
     @Component.Builder
     interface Builder {
 

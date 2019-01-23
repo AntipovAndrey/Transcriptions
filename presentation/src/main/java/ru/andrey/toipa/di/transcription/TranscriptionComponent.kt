@@ -8,6 +8,8 @@ import ru.andrey.toipa.di.viewmodel.ViewModelAwareComponent
 @Feature
 @Component(
     dependencies = [ApplicationComponent::class],
-    modules = [TranscriptionModule::class, TranscriptionViewModelModule::class]
+    modules = [TranscriptionModule::class,
+        TranscriptionDataModule::class,
+        TranscriptionViewModelModule::class]
 )
 interface TranscriptionComponent : ViewModelAwareComponent

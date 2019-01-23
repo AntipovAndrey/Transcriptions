@@ -3,6 +3,7 @@ package ru.andrey.toipa.di.transcription
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import ru.andrey.data.db.TranscriptionDao
 import ru.andrey.data.repository.TranscriptionRepositoryImpl
 import ru.andrey.data.repository.dictionary.CollinsHtmlDictionaryService
 import ru.andrey.data.repository.dictionary.DictionaryService
@@ -21,8 +22,11 @@ class TranscriptionModule {
 
     @Feature
     @Provides
-    fun provideTranscriptionRepository(dictionaryService: DictionaryService): TranscriptionRepository {
-        return TranscriptionRepositoryImpl(dictionaryService)
+    fun provideTranscriptionRepository(
+        dictionaryService: DictionaryService,
+        dao: TranscriptionDao
+    ): TranscriptionRepository {
+        return TranscriptionRepositoryImpl(dictionaryService, dao)
     }
 
     @Feature
