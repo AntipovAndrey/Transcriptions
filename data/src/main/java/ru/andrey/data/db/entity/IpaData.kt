@@ -15,7 +15,8 @@ import android.arch.persistence.room.PrimaryKey
 )
 class IpaData(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     var ipa: String,
     var order: Int = 0,
     var transcriptionId: Int = 0
