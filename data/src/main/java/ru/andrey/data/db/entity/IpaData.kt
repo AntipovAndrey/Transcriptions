@@ -13,9 +13,10 @@ import android.arch.persistence.room.PrimaryKey
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class IpaData(
+class IpaData(
 
     @PrimaryKey
     var ipa: String,
-    var transcriptionId: Int
+    var order: Int = 0,
+    var transcriptionId: Int = 0
 )

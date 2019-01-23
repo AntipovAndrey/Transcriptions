@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "transcriptions")
-data class TranscriptionData(
+class TranscriptionData(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
