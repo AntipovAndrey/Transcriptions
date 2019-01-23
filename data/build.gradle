@@ -37,6 +37,9 @@ dependencies {
     implementation jSoup
     implementation retrofit
 
+    implementation room
+    kapt roomCompiler
+
     implementation project(':domain')
 }
 
