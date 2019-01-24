@@ -2,15 +2,12 @@ package ru.andrey.toipa.ui
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.ipa_fragment.*
-import ru.andrey.domain.model.Variant
 import ru.andrey.toipa.R
 import ru.andrey.toipa.utils.app
 import ru.andrey.toipa.utils.debounce
@@ -39,11 +36,10 @@ class TranscriptionFragment : Fragment() {
 
     private fun handleState(state: TranscriptionsState) {
         if (state.result == null) {
-            hideAll()
+            recycler.visibility = View.GONE
         } else {
+            recycler.visibility = View.VISIBLE
             val transcriptions = state.result.transcriptions
-            showAmerican(transcriptions[Variant.AMERICAN])
-            showBritish(transcriptions[Variant.BRITISH])
         }
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
@@ -51,55 +47,5 @@ class TranscriptionFragment : Fragment() {
         if (state.error.contentIfNotHandled == true) {
             Snackbar.make(rootView, "Error", Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    private fun getTranscriptionText(transcriptions: List<String>) = transcriptions.joinToString("\n")
-
-    private fun showAmerican(transcriptions: List<String>?) {
-        showIpa(transcriptions, Variant.AMERICAN)
-    }
-
-    private fun showBritish(transcriptions: List<String>?) {
-        showIpa(transcriptions, Variant.BRITISH)
-    }
-
-    private fun showIpa(transcriptions: List<String>?, variant: Variant) {
-        val card = if (variant == Variant.AMERICAN) americanCard else britishCard
-        val text = if (variant == Variant.AMERICAN) ipaAmerican else ipaBritish
-
-        val hideCard = transcriptions.isNullOrEmpty()
-
-        if (variant == Variant.BRITISH) {
-            if (hideCard) {
-                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
-                    rightMargin = toPx(8)
-                }
-            } else {
-                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
-                    rightMargin = toPx(0)
-                }
-            }
-        }
-
-        if (hideCard) {
-            if (variant == Variant.BRITISH) { // left card gone
-                americanCard.layoutParams = (americanCard.layoutParams as (ConstraintLayout.LayoutParams)).apply {
-                    rightMargin = toPx(8)
-                }
-            }
-            card.visibility = View.GONE
-        } else {
-            card.visibility = View.VISIBLE
-            text.text = getTranscriptionText(transcriptions!!)
-        }
-    }
-
-    private fun toPx(dp: Int): Int {
-        return Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
-    }
-
-    private fun hideAll() {
-        americanCard.visibility = View.GONE
-        britishCard.visibility = View.GONE
     }
 }
