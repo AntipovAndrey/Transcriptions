@@ -33,25 +33,24 @@ class TranscriptionFragment : Fragment() {
         adapter = TranscriptionAdapter()
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
-        wordInput.addTextChangedListener(textChanged { viewModel.setWord(it) } debounce 300)
+        wordInput.addTextChangedListener(textChanged { viewModel.setSentence(it) } debounce 450)
         viewModel.observeTranscriptions().observe(this, Observer {
             handleState(it!!)
         })
     }
 
     private fun handleState(state: TranscriptionsState) {
-        if (state.result == null) {
+        if (state.result.isEmpty()) {
             recycler.visibility = View.GONE
         } else {
+            adapter.submitList(state.result)
             recycler.visibility = View.VISIBLE
-            val transcriptions = state.result
-            adapter.submitList(listOf(transcriptions))
         }
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
 
         if (state.error.contentIfNotHandled == true) {
-            Snackbar.make(rootView, "Error", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(rootView, "Error", Snackbar.LENGTH_LONG).show()
         }
     }
 }

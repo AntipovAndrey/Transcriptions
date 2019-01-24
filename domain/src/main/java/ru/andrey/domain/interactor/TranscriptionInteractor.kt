@@ -5,5 +5,8 @@ import ru.andrey.domain.repository.TranscriptionRepository
 
 class TranscriptionInteractor constructor(private val repository: TranscriptionRepository) {
 
-    fun transcriptionFor(word: String): Transcription = repository.getTranscription(word)
+    fun transcriptionFor(sentence: String): List<Transcription> {
+        return sentence.split(' ')
+            .map { repository.getTranscription(it) }
+    }
 }

@@ -5,7 +5,7 @@ import ru.andrey.toipa.utils.Event
 import ru.andrey.toipa.utils.toEvent
 
 sealed class TranscriptionsState(
-    val result: Transcription? = null,
+    val result: List<Transcription> = emptyList(),
     val error: Event<Boolean> = false.toEvent(),
     val loading: Boolean = false
 )
@@ -16,4 +16,4 @@ object Loading : TranscriptionsState(loading = true)
 
 class Error : TranscriptionsState(error = true.toEvent())
 
-class Success(word: Transcription) : TranscriptionsState(word)
+class Success(words: List<Transcription>) : TranscriptionsState(words)

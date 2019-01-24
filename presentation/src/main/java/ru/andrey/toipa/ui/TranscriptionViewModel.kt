@@ -23,16 +23,16 @@ class TranscriptionViewModel @Inject constructor(private val interactor: Transcr
 
     fun observeTranscriptions(): LiveData<TranscriptionsState> = transcriptions
 
-    fun setWord(word: String) {
+    fun setSentence(sentence: String) {
         fetchIpaJob?.cancel()
-        if (word.isEmpty()) {
+        if (sentence.isEmpty()) {
             transcriptions.postValue(Initial)
             return
         }
         fetchIpaJob = CoroutineScope(Dispatchers.IO).launch {
             transcriptions.postValue(Loading)
             try {
-                val loaded = Success(interactor.transcriptionFor(word))
+                val loaded = Success(interactor.transcriptionFor(sentence))
                 ifActive { transcriptions.postValue(loaded) }
             } catch (e: Exception) {
                 ifActive { transcriptions.postValue(Error()) }
