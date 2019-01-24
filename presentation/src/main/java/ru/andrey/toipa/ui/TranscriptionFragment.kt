@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import ru.andrey.toipa.utils.textChanged
 class TranscriptionFragment : Fragment() {
 
     private lateinit var viewModel: TranscriptionViewModel
+    private lateinit var adapter: TranscriptionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,9 @@ class TranscriptionFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        adapter = TranscriptionAdapter()
+        recycler.layoutManager = LinearLayoutManager(context)
+        recycler.adapter = adapter
         wordInput.addTextChangedListener(textChanged { viewModel.setWord(it) } debounce 300)
         viewModel.observeTranscriptions().observe(this, Observer {
             handleState(it!!)
@@ -39,7 +44,8 @@ class TranscriptionFragment : Fragment() {
             recycler.visibility = View.GONE
         } else {
             recycler.visibility = View.VISIBLE
-            val transcriptions = state.result.transcriptions
+            val transcriptions = state.result
+            adapter.submitList(listOf(transcriptions))
         }
 
         progressBar.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
