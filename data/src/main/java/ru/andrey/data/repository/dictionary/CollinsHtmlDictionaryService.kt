@@ -34,7 +34,7 @@ class CollinsHtmlDictionaryService(private val okHttpClient: OkHttpClient) : Dic
         return dictentries.asSequence()
             .map { it.select(".pron") }
             .map { it.text() }
-            .map { it.split(';', ',') }
+            .map { it.split(';', ',', ' ') }
             .flatMap { it.asSequence() }
             .map(removeHints())
             .map { it.trim() }
